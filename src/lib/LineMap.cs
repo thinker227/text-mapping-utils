@@ -1,9 +1,5 @@
 using System.Collections;
 
-#if NETCOREAPP
-using System.Runtime.InteropServices;
-#endif
-
 namespace TextMappingUtils;
 
 /// <summary>
@@ -90,17 +86,14 @@ public sealed class LineMap : IReadOnlyList<Line>
             throw new ArgumentOutOfRangeException(nameof(position),
                 $"Character position must be less than or equal to the size of the string the line map was constructed from {Size}.");
 
-#if NETCOREAPP
-        var span = CollectionsMarshal.AsSpan(lines);
-#else
-        var span = CollectionExtensions<Line>.AsSpan(lines);
-#endif
+        var startLine = 0;
+        var endLine = LineCount;
 
         while (true)
         {
             Line line;
 
-            if (span.Length == 0)
+            if (startLine >= endLine)
             {
                 // If execution gets here then that means we're past the last line
                 // and want to get the final character of the last line.
@@ -108,17 +101,17 @@ public sealed class LineMap : IReadOnlyList<Line>
                 return new(line, line.Span.Length);
             }
 
-            var index = span.Length / 2;
-            line = span[index];
+            var spanSize = endLine - startLine;
+            var index = startLine + spanSize / 2;
+            line = lines[index];
 
             if (position >= line.Span.Start && position < line.Span.End)
             {
                 return new(line, position - line.Span.Start);
             }
 
-            span = position < line.Span.Start
-                ? span[..index]
-                : span[(index + 1)..];
+            if (position < line.Span.Start) endLine = index;
+            else startLine = index + 1;
         }
     }
 
