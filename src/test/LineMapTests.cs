@@ -7,6 +7,16 @@ public class LineMapTests
     // Using manual newlines here instead of a raw string to ensure that the newlines stay as just \n.
     private const string Text = "all\nbabel\ncs";
 
+    [Fact]
+    public static void Create_ReturnsSingleLine_EmptyString()
+    {
+        var map = LineMap.Create("");
+
+        map.LineCount.ShouldBe(1);
+
+        map.GetLine(0).ShouldBe(new(0, new(0, 0)));
+    }
+
     public static TheoryData<int, Line> GetLine_ReturnsLine_InRange_Data()
     {
         var data = new TheoryData<int, Line>();
@@ -128,6 +138,16 @@ public class LineMapTests
         var map = LineMap.Create(Text);
 
         Should.Throw<ArgumentOutOfRangeException>(() => map.GetCharacterPosition(position));
+    }
+
+    [Fact]
+    public void GetCharacterPosition_ReturnsFirstLine_At0WithNoLines()
+    {
+        var map = LineMap.Create("");
+
+        var characterPosition = map.GetCharacterPosition(0);
+
+        characterPosition.ShouldBe(new(new(0, new(0, 0)), 0));
     }
 
     [Fact]
