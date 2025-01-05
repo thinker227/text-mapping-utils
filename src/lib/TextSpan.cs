@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a span of characters within a larger text.
 /// </summary>
-public readonly struct TextSpan
+public readonly struct TextSpan : IEquatable<TextSpan>
 {
     /// <summary>
     /// The <i>inclusive</i>, 0-based starting index of the span.
@@ -97,4 +97,36 @@ public readonly struct TextSpan
             End = start + length
         };
     }
+
+    /// <summary>
+    /// Checks whether the current <see cref="TextSpan"/> is equal to another.
+    /// </summary>
+    /// <param name="other">The other <see cref="TextSpan"/> to check against.</param>
+    public bool Equals(TextSpan other) =>
+        Start == other.Start &&
+        End == other.End;
+
+    /// <inheritdoc/>
+    public override bool Equals(object? obj) =>
+        obj is TextSpan other && Equals(other);
+
+    /// <summary>
+    /// Checks a <see cref="TextSpan"/> is equal to another.
+    /// </summary>
+    public static bool operator ==(TextSpan a, TextSpan b) =>
+        a.Equals(b);
+
+    /// <summary>
+    /// Checks a <see cref="TextSpan"/> is not equal to another.
+    /// </summary>
+    public static bool operator !=(TextSpan a, TextSpan b) =>
+        !a.Equals(b);
+
+    /// <inheritdoc/>
+    public override int GetHashCode() =>
+        HashCode.Combine(Start, End);
+
+    /// <inheritdoc/>
+    public override string ToString() =>
+        $"{Start}..{End}";
 }

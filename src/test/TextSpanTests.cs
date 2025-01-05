@@ -72,4 +72,19 @@ public class TextSpanTests
     [Fact]
     public void FromLength_ThrowsArgumentOutOfRange_ForLengthLessThan0() =>
         Should.Throw<ArgumentOutOfRangeException>(() => TextSpan.FromLength(2, -5));
+
+    [Fact]
+    public void Equals_ChecksEquality()
+    {
+        var a = new TextSpan(1, 3);
+        var b = new TextSpan(1, 3);
+        a.Equals(b).ShouldBeTrue();
+    }
+
+    [Fact]
+    public void ToString_FormatsCorrectly()
+    {
+        var span = new TextSpan(1, 5);
+        span.ToString().ShouldBe("1..5");
+    }
 }
