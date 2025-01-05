@@ -7,16 +7,18 @@ public class LineMapTests
     // Using manual newlines here instead of a raw string to ensure that the newlines stay as just \n.
     private const string Text = "all\nbabel\ncs";
 
-    public static IEnumerable<object[]> GetLine_ReturnsLine_InRange_Data()
+    public static TheoryData<int, Line> GetLine_ReturnsLine_InRange_Data()
     {
-        yield return Data(lineNumber: 0, lineStart: 0, lineEnd: 4);
-        yield return Data(lineNumber: 1, lineStart: 4, lineEnd: 10);
-        yield return Data(lineNumber: 2, lineStart: 10, lineEnd: 12);
+        var data = new TheoryData<int, Line>();
 
-        yield break;
+        Add(lineNumber: 0, lineStart: 0, lineEnd: 4);
+        Add(lineNumber: 1, lineStart: 4, lineEnd: 10);
+        Add(lineNumber: 2, lineStart: 10, lineEnd: 12);
 
-        static object[] Data(int lineNumber, int lineStart, int lineEnd) =>
-            [lineNumber, new Line(lineNumber, new(lineStart, lineEnd))];
+        return data;
+
+        void Add(int lineNumber, int lineStart, int lineEnd) =>
+            data.Add(lineNumber, new(lineNumber, new(lineStart, lineEnd)));
     }
 
     [Theory]
@@ -30,17 +32,12 @@ public class LineMapTests
         line.ShouldBe(expected);
     }
 
-    public static IEnumerable<object[]> GetLine_ThrowsArgumentOutOfRangeException_OutOfRange_Data()
-    {
-        yield return Data(-1);
-        yield return Data(4);
-        yield return Data(5);
-
-        yield break;
-
-        static object[] Data(int lineNumber) =>
-            [lineNumber];
-    }
+    public static TheoryData<int> GetLine_ThrowsArgumentOutOfRangeException_OutOfRange_Data() =>
+    [
+        -1,
+        4,
+        5
+    ];
 
     [Theory]
     [MemberData(nameof(GetLine_ThrowsArgumentOutOfRangeException_OutOfRange_Data))]
@@ -51,54 +48,56 @@ public class LineMapTests
         Should.Throw<ArgumentOutOfRangeException>(() => map.GetLine(lineNumber));
     }
 
-    public static IEnumerable<object[]> GetCharacterPosition_ReturnsCharacterPosition_InRange_Data()
+    public static TheoryData<int, CharacterPosition> GetCharacterPosition_ReturnsCharacterPosition_InRange_Data()
     {
-        yield return Data(
+        var data = new TheoryData<int, CharacterPosition>();
+
+        Add(
             position: 0,
             lineNumber: 0,
             lineStart: 0,
             lineEnd: 4,
             characterOffset: 0);
 
-        yield return Data(
+        Add(
             position: 3,
             lineNumber: 0,
             lineStart: 0,
             lineEnd: 4,
             characterOffset: 3);
 
-        yield return Data(
+        Add(
             position: 4,
             lineNumber: 1,
             lineStart: 4,
             lineEnd: 10,
             characterOffset: 0);
 
-        yield return Data(
+        Add(
             position: 6,
             lineNumber: 1,
             lineStart: 4,
             lineEnd: 10,
             characterOffset: 2);
 
-        yield return Data(
+        Add(
             position: 11,
             lineNumber: 2,
             lineStart: 10,
             lineEnd: 12,
             characterOffset: 1);
 
-        yield return Data(
+        Add(
             position: 12,
             lineNumber: 2,
             lineStart: 10,
             lineEnd: 12,
             characterOffset: 2);
 
-        yield break;
+        return data;
 
-        static object[] Data(int position, int lineNumber, int lineStart, int lineEnd, int characterOffset) =>
-            [position, new CharacterPosition(new(lineNumber, new(lineStart, lineEnd)), characterOffset)];
+        void Add(int position, int lineNumber, int lineStart, int lineEnd, int characterOffset) =>
+            data.Add(position, new(new(lineNumber, new(lineStart, lineEnd)), characterOffset));
     }
 
     [Theory]
@@ -114,18 +113,13 @@ public class LineMapTests
         characterPosition.ShouldBe(expected);
     }
 
-    public static IEnumerable<object[]> GetCharacterPosition_ThrowsArgumentOutOfRangeException_OutOfRange_Data()
-    {
-        yield return Data(-1);
-        yield return Data(-2);
-        yield return Data(13);
-        yield return Data(14);
-
-        yield break;
-
-        static object[] Data(int position) =>
-            [position];
-    }
+    public static TheoryData<int> GetCharacterPosition_ThrowsArgumentOutOfRangeException_OutOfRange_Data() =>
+    [
+        -1,
+        -2,
+        13,
+        14
+    ];
 
     [Theory]
     [MemberData(nameof(GetCharacterPosition_ThrowsArgumentOutOfRangeException_OutOfRange_Data))]
