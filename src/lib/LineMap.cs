@@ -7,6 +7,7 @@ namespace TextMappingUtils;
 /// A mapping between lines and character positions of a text.
 /// A <see cref="LineMap"/> does not contain any text, it merely contains
 /// numeric representations of lines within a piece of text.
+/// The map is read-only and cannot be updated after being created.
 /// The principal method of constructing a <see cref="LineMap"/> is <see cref="LineMap.Create"/>.
 /// </summary>
 /// <seealso cref="Create"/>

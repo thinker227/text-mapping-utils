@@ -6,7 +6,7 @@
 public readonly struct TextSpan : IEquatable<TextSpan>
 {
     /// <summary>
-    /// The <i>inclusive</i>, 0-based starting index of the span.
+    /// The <i>inclusive</i>, 0-indexed starting index of the span.
     /// </summary>
     /// <remarks>
     /// When using <see cref="TextSpan(int, int)"/>, this is ensured to be strictly
@@ -16,7 +16,7 @@ public readonly struct TextSpan : IEquatable<TextSpan>
     public int Start { get; init; }
 
     /// <summary>
-    /// The <i>exclusive</i>, 0-based ending index of the span.
+    /// The <i>exclusive</i>, 0-indexed ending index of the span.
     /// </summary>
     /// <remarks>
     /// When using <see cref="TextSpan(int, int)"/>, this is ensured to be strictly
@@ -43,8 +43,8 @@ public readonly struct TextSpan : IEquatable<TextSpan>
     /// <summary>
     /// Creates a new <see cref="TextSpan"/> from a start and end position.
     /// </summary>
-    /// <param name="start">The <i>inclusive</i>, 0-based starting index of the span.</param>
-    /// <param name="end">The <i>exclusive</i>, 0-based ending index of the span.</param>
+    /// <param name="start">The <i>inclusive</i>, 0-indexed starting index of the span.</param>
+    /// <param name="end">The <i>exclusive</i>, 0-indexed ending index of the span.</param>
     /// <exception cref="ArgumentOutOfRangeException">
     /// Either <paramref name="start"/> or <paramref name="end"/> are less than 0.
     /// </exception>
@@ -76,7 +76,7 @@ public readonly struct TextSpan : IEquatable<TextSpan>
     /// <summary>
     /// Constructs a new <see cref="TextSpan"/> from a start position and a length.
     /// </summary>
-    /// <param name="start">The <i>inclusive</i>, 0-based starting index of the span.</param>
+    /// <param name="start">The <i>inclusive</i>, 0-indexed starting index of the span.</param>
     /// <param name="length">The length of the span.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentOutOfRangeException">
