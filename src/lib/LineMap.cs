@@ -4,7 +4,13 @@ namespace TextMappingUtils;
 
 /// <summary>
 /// A mapping between lines and character positions of a text.
+/// A <see cref="LineMap"/> does not contain any text, it merely contains
+/// numeric representations of lines within a piece of text.
+/// The principal method of constructing a <see cref="LineMap"/> is <see cref="LineMap.Create"/>.
 /// </summary>
+/// <seealso cref="Create"/>
+/// <seealso cref="GetCharacterPosition"/>
+/// <seealso cref="GetLine"/>
 public sealed class LineMap : IReadOnlyList<Line>
 {
     private readonly List<Line> lines;
@@ -28,9 +34,13 @@ public sealed class LineMap : IReadOnlyList<Line>
         this.lines = lines;
 
     /// <summary>
-    /// Creates a new line map.
+    /// Creates a new line map using <c>\n</c> as the line delimiter.
     /// </summary>
-    /// <param name="str">The string of characters to create the map from.</param>
+    /// <param name="str">The span of characters to create the map from.</param>
+    /// <remarks>
+    /// The created <see cref="LineMap"/> always contains at least one line.
+    /// If <paramref name="str"/> is empty, the map will contain a single empty line.
+    /// </remarks>
     public static LineMap Create(ReadOnlySpan<char> str)
     {
         var lines = new List<Line>();
@@ -58,14 +68,17 @@ public sealed class LineMap : IReadOnlyList<Line>
     }
 
     /// <summary>
-    /// Gets the line with a specified line number.
+    /// Gets the line with a specified line number. Runs in <c>O(1)</c>.
     /// </summary>
     /// <param name="lineNumber">The 0-indexed line number of the line to get.</param>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// <paramref name="lineNumber"/> is less than to 0 or greater or equal to than <see cref="LineCount"/>.
+    /// </exception>
     public Line GetLine(int lineNumber)
     {
         if (lineNumber < 0)
             throw new ArgumentOutOfRangeException(nameof(lineNumber),
-                "Line number cannot be less than or equal to 0.");
+                "Line number cannot be less than 0.");
         if (lineNumber >= LineCount)
             throw new ArgumentOutOfRangeException(nameof(lineNumber),
                 $"Line number cannot be greater than the amount of lines the line map was constructed from ({LineCount}).");
@@ -75,14 +88,22 @@ public sealed class LineMap : IReadOnlyList<Line>
 
     /// <summary>
     /// Gets the character position at a specified position from the start of the text.
+    /// Runs in at most <c>O(log n)</c> where <c>n</c> is <see cref="LineCount"/>.
     /// </summary>
     /// <param name="position">The position in the text to get the character position at.</param>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// <paramref name="position"/> is less than 0 or greater than <see cref="Size"/>.
+    /// </exception>
+    /// <remarks>
+    /// If <paramref name="position"/> is equal to <see cref="Size"/>,
+    /// the returned character position will be the final character of the last line in the map.
+    /// </remarks>
     public CharacterPosition GetCharacterPosition(int position)
     {
         if (position < 0)
             throw new ArgumentOutOfRangeException(nameof(position),
-                "Character position cannot be negative.");
-        if (position >= Size + 1)
+                "Character position cannot be less than 0.");
+        if (position > Size)
             throw new ArgumentOutOfRangeException(nameof(position),
                 $"Character position must be less than or equal to the size of the string the line map was constructed from {Size}.");
 
@@ -124,7 +145,7 @@ public sealed class LineMap : IReadOnlyList<Line>
 }
 
 /// <summary>
-/// A representation of a single line of text within a larger text.
+/// A single line of text within a larger text.
 /// </summary>
 /// <param name="LineNumber">The 0-indexed line number of the line.</param>
 /// <param name="Span">The span of the line within the larger text.</param>
