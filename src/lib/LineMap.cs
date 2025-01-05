@@ -41,22 +41,22 @@ public sealed class LineMap : IReadOnlyList<Line>
 
         var lineNumber = 0;
         var lineStart = 0;
-        var lineLength = 0;
+        var lineEnd = 0;
 
         for (var i = 0; i < str.Length; i++)
         {
-            lineLength++;
+            lineEnd++;
 
             if (str[i] is not '\n') continue;
 
-            lines.Add(new(lineNumber, TextSpan.FromLength(lineStart, lineLength)));
+            lines.Add(new(lineNumber, new() { Start = lineStart, End = lineEnd }));
 
             lineNumber++;
             lineStart = i + 1;
-            lineLength = 0;
+            lineEnd = lineStart;
         }
 
-        lines.Add(new(lineNumber, TextSpan.FromLength(lineStart, lineLength)));
+        lines.Add(new(lineNumber, new() { Start = lineStart, End = lineEnd }));
 
         return new(lines);
     }
