@@ -26,7 +26,7 @@ public sealed class LineMap : IReadOnlyList<Line>
     int IReadOnlyCollection<Line>.Count => LineCount;
 
     Line IReadOnlyList<Line>.this[int index] =>
-        GetLine(index + 1);
+        GetLine(index);
 
     private LineMap(List<Line> lines) =>
         this.lines = lines;
@@ -39,7 +39,7 @@ public sealed class LineMap : IReadOnlyList<Line>
     {
         var lines = new List<Line>();
 
-        var lineNumber = 1;
+        var lineNumber = 0;
         var lineStart = 0;
         var lineLength = 0;
 
@@ -62,19 +62,19 @@ public sealed class LineMap : IReadOnlyList<Line>
     }
 
     /// <summary>
-    /// Gets the line with the specified <b>1-indexed</b> line number.
+    /// Gets the line with a specified line number.
     /// </summary>
-    /// <param name="lineNumber">The <b>1-indexed</b> line number of the line to get.</param>
+    /// <param name="lineNumber">The 0-indexed line number of the line to get.</param>
     public Line GetLine(int lineNumber)
     {
-        if (lineNumber <= 0)
+        if (lineNumber < 0)
             throw new ArgumentOutOfRangeException(nameof(lineNumber),
                 "Line number cannot be less than or equal to 0.");
-        if (lineNumber > LineCount)
+        if (lineNumber >= LineCount)
             throw new ArgumentOutOfRangeException(nameof(lineNumber),
                 $"Line number cannot be greater than the amount of lines the line map was constructed from ({LineCount}).");
 
-        return lines[lineNumber - 1];
+        return lines[lineNumber];
     }
 
     /// <summary>
@@ -133,7 +133,7 @@ public sealed class LineMap : IReadOnlyList<Line>
 /// <summary>
 /// A representation of a single line of text within a larger text.
 /// </summary>
-/// <param name="LineNumber">The <b>1-indexed</b> line number of the line.</param>
+/// <param name="LineNumber">The 0-indexed line number of the line.</param>
 /// <param name="Span">The span of the line within the larger text.</param>
 public readonly record struct Line(int LineNumber, TextSpan Span);
 

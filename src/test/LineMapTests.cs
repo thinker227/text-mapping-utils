@@ -9,9 +9,9 @@ public class LineMapTests
 
     public static IEnumerable<object[]> GetLine_ReturnsLine_InRange_Data()
     {
-        yield return Data(lineNumber: 1, lineStart: 0, lineEnd: 4);
-        yield return Data(lineNumber: 2, lineStart: 4, lineEnd: 10);
-        yield return Data(lineNumber: 3, lineStart: 10, lineEnd: 12);
+        yield return Data(lineNumber: 0, lineStart: 0, lineEnd: 4);
+        yield return Data(lineNumber: 1, lineStart: 4, lineEnd: 10);
+        yield return Data(lineNumber: 2, lineStart: 10, lineEnd: 12);
 
         yield break;
 
@@ -32,7 +32,6 @@ public class LineMapTests
 
     public static IEnumerable<object[]> GetLine_ThrowsArgumentOutOfRangeException_OutOfRange_Data()
     {
-        yield return Data(0);
         yield return Data(-1);
         yield return Data(4);
         yield return Data(5);
@@ -56,42 +55,42 @@ public class LineMapTests
     {
         yield return Data(
             position: 0,
-            lineNumber: 1,
+            lineNumber: 0,
             lineStart: 0,
             lineEnd: 4,
             characterOffset: 0);
 
         yield return Data(
             position: 3,
-            lineNumber: 1,
+            lineNumber: 0,
             lineStart: 0,
             lineEnd: 4,
             characterOffset: 3);
 
         yield return Data(
             position: 4,
-            lineNumber: 2,
+            lineNumber: 1,
             lineStart: 4,
             lineEnd: 10,
             characterOffset: 0);
 
         yield return Data(
             position: 6,
-            lineNumber: 2,
+            lineNumber: 1,
             lineStart: 4,
             lineEnd: 10,
             characterOffset: 2);
 
         yield return Data(
             position: 11,
-            lineNumber: 3,
+            lineNumber: 2,
             lineStart: 10,
             lineEnd: 12,
             characterOffset: 1);
 
         yield return Data(
             position: 12,
-            lineNumber: 3,
+            lineNumber: 2,
             lineStart: 10,
             lineEnd: 12,
             characterOffset: 2);
@@ -159,9 +158,9 @@ public class LineMapTests
         var map = LineMap.Create(Text);
 
         map.ToArray().ShouldBe([
-            new(1, new(0, 4)),
-            new(2, new(4, 10)),
-            new(3, new(10, 12))
+            new(0, new(0, 4)),
+            new(1, new(4, 10)),
+            new(2, new(10, 12))
         ]);
     }
 }
