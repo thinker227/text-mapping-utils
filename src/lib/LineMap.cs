@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics;
 
 namespace TextMappingUtils;
 
@@ -149,6 +150,7 @@ public sealed class LineMap : IReadOnlyList<Line>
 /// </summary>
 /// <param name="LineNumber">The 0-indexed line number of the line.</param>
 /// <param name="Span">The span of the line within the larger text.</param>
+[DebuggerDisplay("Line {LineNumber} ({Span})")]
 public readonly record struct Line(int LineNumber, TextSpan Span);
 
 /// <summary>
@@ -156,6 +158,7 @@ public readonly record struct Line(int LineNumber, TextSpan Span);
 /// </summary>
 /// <param name="Line">The line of the character.</param>
 /// <param name="Offset">The character's offset from the start of the line.</param>
+[DebuggerDisplay("{Line.LineNumber}:{Offset}")]
 public readonly record struct CharacterPosition(Line Line, int Offset)
 {
     /// <summary>
