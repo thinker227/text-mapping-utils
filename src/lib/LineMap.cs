@@ -140,9 +140,42 @@ public sealed class LineMap : IReadOnlyList<Line>
     /// <summary>
     /// Enumerates the lines of the map.
     /// </summary>
-    public IEnumerator<Line> GetEnumerator() => lines.GetEnumerator();
+    /// <remarks>
+    /// For optimization, this method returns a custom enumerator struct.
+    /// To use it as an <see cref="IEnumerator{T}"/>,
+    /// use <see cref="Enumerable.AsEnumerable{T}"/> on the map.
+    /// </remarks>
+    public LineEnumerator GetEnumerator() => new(this);
+
+    IEnumerator<Line> IEnumerable<Line>.GetEnumerator() => GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    /// <summary>
+    /// An enumerator for the lines of a <see cref="LineMap"/>.
+    /// </summary>
+    /// <param name="map"></param>
+    public struct LineEnumerator(LineMap map) : IEnumerator<Line>
+    {
+        private int current = -1;
+
+        /// <inheritdoc/>
+        public Line Current => map.lines[current];
+
+        object IEnumerator.Current => current;
+
+        /// <inheritdoc/>
+        public bool MoveNext()
+        {
+            current += 1;
+            return current < map.LineCount;
+        }
+
+        void IEnumerator.Reset() =>
+            current = -1;
+
+        void IDisposable.Dispose() {}
+    }
 }
 
 /// <summary>
