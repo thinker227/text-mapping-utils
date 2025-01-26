@@ -73,6 +73,15 @@ public readonly struct TextSpan : IEquatable<TextSpan>
         }
     }
 
+#if NETCOREAPP
+    /// <summary>
+    /// Returns a <see cref="Range"/> constructed from the span.
+    /// </summary>
+    public Range ToRange() => new(
+        start: new(Start, fromEnd: false),
+        end: new(End, fromEnd: false));
+#endif
+
     /// <summary>
     /// Constructs a new <see cref="TextSpan"/> from a start position and a length.
     /// </summary>

@@ -74,6 +74,14 @@ public class TextSpanTests
     }
 
     [Fact]
+    public void ToRange_ConvertsToRange()
+    {
+        var span = new TextSpan(1, 3);
+        var range = span.ToRange();
+        range.ShouldBe(1..3);
+    }
+
+    [Fact]
     public void FromLength_ThrowsArgumentOutOfRange_ForStartLessThan0() =>
         Should.Throw<ArgumentOutOfRangeException>(() => TextSpan.FromLength(-1, 3));
 
