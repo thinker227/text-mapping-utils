@@ -1,4 +1,4 @@
-﻿namespace TextMappingUtils;
+namespace TextMappingUtils;
 
 /// <summary>
 /// Represents a span of characters within a larger text.
@@ -95,6 +95,28 @@ public readonly struct TextSpan : IEquatable<TextSpan>
         {
             Start = start,
             End = start + length
+        };
+    }
+
+    /// <summary>
+    /// Constructs a new empty <see cref="TextSpan"/>.
+    /// The constructed span will have a <see cref="Length"/> of 0,
+    /// and <see cref="Start"/> and <see cref="End"/> will have the same value.
+    /// </summary>
+    /// <param name="at">The value to construct the empty span with.</param>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// <paramref name="at"/> is less than 0.
+    /// </exception>
+    public static TextSpan Empty(int at)
+    {
+        if (at < 0)
+            throw new ArgumentOutOfRangeException(nameof(at),
+                "At cannot be less than 0.");
+        
+        return new()
+        {
+            Start = at,
+            End = at
         };
     }
 

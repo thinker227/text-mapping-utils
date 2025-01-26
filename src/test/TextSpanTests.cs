@@ -66,6 +66,14 @@ public class TextSpanTests
     }
 
     [Fact]
+    public void Empty_IsEmpty()
+    {
+        var span = TextSpan.Empty(2);
+        span.Start.ShouldBe(2);
+        span.End.ShouldBe(2);
+    }
+
+    [Fact]
     public void FromLength_ThrowsArgumentOutOfRange_ForStartLessThan0() =>
         Should.Throw<ArgumentOutOfRangeException>(() => TextSpan.FromLength(-1, 3));
 
