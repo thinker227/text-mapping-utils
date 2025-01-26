@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <!-- Target frameworks -->
   <PropertyGroup>
@@ -8,6 +8,8 @@
   <!-- Package properties -->
   <PropertyGroup>
     <IsPackable>true</IsPackable>
+    <PackageOutputPath>../../package</PackageOutputPath>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <!-- Package metadata -->
