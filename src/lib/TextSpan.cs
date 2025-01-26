@@ -81,6 +81,38 @@ public readonly struct TextSpan : IEquatable<TextSpan>
         }
     }
 
+    /// <summary>
+    /// Returns whether the span contains a specified position.
+    /// </summary>
+    /// <param name="position">The position to check.</param>
+    public bool Contains(int position) =>
+        position >= Start && position < End;
+
+    /// <summary>
+    /// Creates a new span from the total span of two other spans.
+    /// The spans do not have to be connected or next to each other.
+    /// </summary>
+    /// <param name="a">The first span.</param>
+    /// <param name="b">The second span.</param>
+    /// <returns>
+    /// The span between <paramref name="a"/> and <paramref name="b"/>.
+    /// </returns>
+    public static TextSpan Between(TextSpan a, TextSpan b) =>
+        new(Math.Min(a.Start, b.Start), Math.Max(a.End, b.End));
+
+    /// <summary>
+    /// Creates a new span from the total span of two other spans.
+    /// The spans do not have to be connected or next to each other.
+    /// </summary>
+    /// <param name="a">The first span.</param>
+    /// <param name="b">The second span.</param>
+    /// <returns>
+    /// The span between <paramref name="a"/> and <paramref name="b"/>,
+    /// or <paramref name="a"/> if <paramref name="b"/> is <see langword="null"/>.
+    /// </returns>
+    public static TextSpan Between(TextSpan a, TextSpan? b) =>
+        b is { } bx ? Between(a, bx) : a;
+
 #if NETCOREAPP
     /// <summary>
     /// Returns a <see cref="Range"/> constructed from the span.
