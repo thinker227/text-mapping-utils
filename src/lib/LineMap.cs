@@ -171,6 +171,7 @@ public sealed class LineMap : IReadOnlyList<Line>
             return current < map.LineCount;
         }
 
+        // I'm not expecting this to ever be used, but it's here in case it ever is.
         void IEnumerator.Reset() =>
             current = -1;
 
