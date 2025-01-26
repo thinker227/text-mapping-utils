@@ -161,3 +161,36 @@ public readonly struct TextSpan : IEquatable<TextSpan>
     public override string ToString() =>
         $"{Start}..{End}";
 }
+
+/// <summary>
+/// Various extensions relating to <see cref="TextSpan"/>.
+/// </summary>
+public static class TextSpanExtensions
+{
+    /// <summary>
+    /// Forms a slice out of the given span of characters,
+    /// beginning at <see cref="TextSpan.Start"/> with the length of the <see cref="TextSpan"/>.
+    /// </summary>
+    /// <param name="textSpan">The source span of characters.</param>
+    /// <param name="span">The <see cref="TextSpan"/> to use to slice the span of characters.</param>
+    public static Span<char> Slice(this Span<char> span, TextSpan textSpan) =>
+        span[textSpan.Start..textSpan.End];
+
+    /// <summary>
+    /// Forms a slice out of the given read-only span of characters,
+    /// beginning at <see cref="TextSpan.Start"/> with the length of the <see cref="TextSpan"/>.
+    /// </summary>
+    /// <param name="textSpan">The source read-only span of characters.</param>
+    /// <param name="span">The <see cref="TextSpan"/> to use to slice the span of characters.</param>
+    public static ReadOnlySpan<char> Slice(this ReadOnlySpan<char> span, TextSpan textSpan) =>
+        span[textSpan.Start..textSpan.End];
+
+    /// <summary>
+    /// Retrieves a substring from a string.
+    /// The substring starts at a <see cref="TextSpan.Start"/> with the length of the <see cref="TextSpan"/>.
+    /// </summary>
+    /// <param name="str">The source string.</param>
+    /// <param name="textSpan">The <see cref="TextSpan"/> to use to form a substring of the string.</param>
+    public static string Substring(this string str, TextSpan textSpan) =>
+        str[textSpan.Start..textSpan.End];
+}
