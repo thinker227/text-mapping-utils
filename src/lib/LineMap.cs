@@ -6,9 +6,8 @@ namespace TextMappingUtils;
 /// <summary>
 /// A mapping between lines and character positions of a text.
 /// A <see cref="LineMap"/> does not contain any text, it merely contains
-/// numeric representations of lines within a piece of text.
+/// numeric <i>0-indexed</i> representations of lines within a piece of text.
 /// The map is read-only and cannot be updated after being created.
-/// The principal method of constructing a <see cref="LineMap"/> is <see cref="LineMap.Create"/>.
 /// </summary>
 /// <seealso cref="Create"/>
 /// <seealso cref="GetCharacterPosition"/>
@@ -155,7 +154,7 @@ public sealed class LineMap : IReadOnlyList<Line>
     /// <summary>
     /// An enumerator for the lines of a <see cref="LineMap"/>.
     /// </summary>
-    /// <param name="map"></param>
+    /// <param name="map">The <see cref="LineMap"/> the enumerator enumerates.</param>
     public struct LineEnumerator(LineMap map) : IEnumerator<Line>
     {
         private int current = -1;

@@ -1,8 +1,14 @@
-namespace TextMappingUtils;
+﻿namespace TextMappingUtils;
 
 /// <summary>
-/// Represents a span of characters within a larger text.
+/// Represents a span of characters within a text.
 /// </summary>
+/// <remarks>
+/// It is recommended to construct new <see cref="TextSpan"/>s through the <see cref="TextSpan(int, int)"/> constructor.
+/// While <see cref="Start"/> and <see cref="End"/> can both be initialized through the object initializer,
+/// using the constructor will ensure the invariant that <see cref="Start"/> is strictly less than or equal to <see cref="End"/>
+/// holds true. Otherwise, care should be taken to ensure this manually.
+/// </remarks>
 public readonly struct TextSpan : IEquatable<TextSpan>
 {
     /// <summary>
