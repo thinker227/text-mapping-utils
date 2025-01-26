@@ -1,4 +1,6 @@
-﻿namespace TextMappingUtils;
+﻿using System.Runtime.CompilerServices;
+
+namespace TextMappingUtils;
 
 /// <summary>
 /// Represents a span of characters within a text.
@@ -179,6 +181,7 @@ public static class TextSpanExtensions
     /// </summary>
     /// <param name="textSpan">The source span of characters.</param>
     /// <param name="span">The <see cref="TextSpan"/> to use to slice the span of characters.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Span<char> Slice(this Span<char> span, TextSpan textSpan) =>
         span[textSpan.Start..textSpan.End];
 
@@ -188,6 +191,7 @@ public static class TextSpanExtensions
     /// </summary>
     /// <param name="textSpan">The source read-only span of characters.</param>
     /// <param name="span">The <see cref="TextSpan"/> to use to slice the span of characters.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ReadOnlySpan<char> Slice(this ReadOnlySpan<char> span, TextSpan textSpan) =>
         span[textSpan.Start..textSpan.End];
 
@@ -197,6 +201,7 @@ public static class TextSpanExtensions
     /// </summary>
     /// <param name="str">The source string.</param>
     /// <param name="textSpan">The <see cref="TextSpan"/> to use to form a substring of the string.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string Substring(this string str, TextSpan textSpan) =>
         str[textSpan.Start..textSpan.End];
 }
