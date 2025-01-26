@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Immutable;
 using System.Diagnostics;
 
 namespace TextMappingUtils;
@@ -14,12 +15,12 @@ namespace TextMappingUtils;
 /// <seealso cref="GetLine"/>
 public sealed class LineMap : IReadOnlyList<Line>
 {
-    private readonly List<Line> lines;
+    private readonly ImmutableArray<Line> lines;
 
     /// <summary>
     /// The total amount of lines in the map.
     /// </summary>
-    public int LineCount => lines.Count;
+    public int LineCount => lines.Length;
 
     /// <summary>
     /// The size of the mapped text.
@@ -31,7 +32,7 @@ public sealed class LineMap : IReadOnlyList<Line>
     Line IReadOnlyList<Line>.this[int index] =>
         GetLine(index);
 
-    private LineMap(List<Line> lines) =>
+    private LineMap(ImmutableArray<Line> lines) =>
         this.lines = lines;
 
     /// <summary>
@@ -44,7 +45,7 @@ public sealed class LineMap : IReadOnlyList<Line>
     /// </remarks>
     public static LineMap Create(ReadOnlySpan<char> str)
     {
-        var lines = new List<Line>();
+        var lines = ImmutableArray.CreateBuilder<Line>();
 
         var lineNumber = 0;
         var lineStart = 0;
@@ -65,7 +66,7 @@ public sealed class LineMap : IReadOnlyList<Line>
 
         lines.Add(new(lineNumber, new() { Start = lineStart, End = lineEnd }));
 
-        return new(lines);
+        return new(lines.ToImmutable());
     }
 
     /// <summary>
