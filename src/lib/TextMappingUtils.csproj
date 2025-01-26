@@ -19,6 +19,8 @@
     <Description>
       A couple utilities for mapping between text and line/character positions.
     </Description>
+    <Copyright>thinker227 2025</Copyright>
+    <Authors>thinker227</Authors>
     <PackageTags>text utility</PackageTags>
     <PackageReadmeFile>package-readme.md</PackageReadmeFile>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
