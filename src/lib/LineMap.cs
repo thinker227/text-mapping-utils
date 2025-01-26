@@ -160,9 +160,9 @@ public sealed class LineMap : IReadOnlyList<Line>
         private int current = -1;
 
         /// <inheritdoc/>
-        public Line Current => map.lines[current];
+        public readonly Line Current => map.lines[current];
 
-        object IEnumerator.Current => current;
+        readonly object IEnumerator.Current => current;
 
         /// <inheritdoc/>
         public bool MoveNext()
@@ -174,7 +174,7 @@ public sealed class LineMap : IReadOnlyList<Line>
         void IEnumerator.Reset() =>
             current = -1;
 
-        void IDisposable.Dispose() {}
+        readonly void IDisposable.Dispose() {}
     }
 }
 
