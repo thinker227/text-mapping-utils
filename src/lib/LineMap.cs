@@ -193,11 +193,14 @@ public readonly record struct Line(int LineNumber, TextSpan Span);
 /// </summary>
 /// <param name="Line">The line of the character.</param>
 /// <param name="Offset">The character's offset from the start of the line.</param>
-[DebuggerDisplay("{Line.LineNumber}:{Offset}")]
+[DebuggerDisplay("{GetDebuggerDisplay()}")]
 public readonly record struct CharacterPosition(Line Line, int Offset)
 {
     /// <summary>
     /// The absolute position of the character within the larger text.
     /// </summary>
     public int AbsolutePosition => Line.Span.Start + Offset;
+
+    private string GetDebuggerDisplay() =>
+        $"{Line.LineNumber}:{Offset}";
 }
