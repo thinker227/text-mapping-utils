@@ -20,6 +20,8 @@
     <PackageTags>text utility</PackageTags>
     <PackageReadmeFile>package-readme.md</PackageReadmeFile>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/thinker227/text-mapping-utils</RepositoryUrl>
   </PropertyGroup>
 
   <!-- Include additional files -->
