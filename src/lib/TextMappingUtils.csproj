@@ -15,7 +15,7 @@
   <!-- Package metadata -->
   <PropertyGroup>
     <PackageId>thinker227.TextMappingUtils</PackageId>
-    <PackageVersion>1.1.0</PackageVersion>
+    <PackageVersion>1.1.1</PackageVersion>
     <Description>
       A couple utilities for mapping between text and line/character positions.
     </Description>

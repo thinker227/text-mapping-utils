@@ -138,7 +138,7 @@ public readonly struct TextSpan : IEquatable<TextSpan>
                 "Start cannot be less than 0.");
         if (length < 0)
             throw new ArgumentOutOfRangeException(nameof(length),
-                "Length cannot be less than 0");
+                "Length cannot be less than 0.");
 
         return new()
         {
@@ -182,13 +182,13 @@ public readonly struct TextSpan : IEquatable<TextSpan>
         obj is TextSpan other && Equals(other);
 
     /// <summary>
-    /// Checks a <see cref="TextSpan"/> is equal to another.
+    /// Checks whether a <see cref="TextSpan"/> is equal to another.
     /// </summary>
     public static bool operator ==(TextSpan a, TextSpan b) =>
         a.Equals(b);
 
     /// <summary>
-    /// Checks a <see cref="TextSpan"/> is not equal to another.
+    /// Checks whether a <see cref="TextSpan"/> is not equal to another.
     /// </summary>
     public static bool operator !=(TextSpan a, TextSpan b) =>
         !a.Equals(b);
@@ -208,23 +208,23 @@ public readonly struct TextSpan : IEquatable<TextSpan>
 public static class TextSpanExtensions
 {
     /// <summary>
-    /// Forms a slice out of the given span of characters,
+    /// Forms a slice out of the given span,
     /// beginning at <see cref="TextSpan.Start"/> with the length of the <see cref="TextSpan"/>.
     /// </summary>
-    /// <param name="textSpan">The source span of characters.</param>
-    /// <param name="span">The <see cref="TextSpan"/> to use to slice the span of characters.</param>
+    /// <param name="textSpan">The source span.</param>
+    /// <param name="span">The <see cref="TextSpan"/> to use to slice the span.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Span<char> Slice(this Span<char> span, TextSpan textSpan) =>
+    public static Span<T> Slice<T>(this Span<T> span, TextSpan textSpan) =>
         span[textSpan.Start..textSpan.End];
 
     /// <summary>
-    /// Forms a slice out of the given read-only span of characters,
+    /// Forms a slice out of the given read-only span,
     /// beginning at <see cref="TextSpan.Start"/> with the length of the <see cref="TextSpan"/>.
     /// </summary>
-    /// <param name="textSpan">The source read-only span of characters.</param>
-    /// <param name="span">The <see cref="TextSpan"/> to use to slice the span of characters.</param>
+    /// <param name="textSpan">The source read-only span.</param>
+    /// <param name="span">The <see cref="TextSpan"/> to use to slice the span.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ReadOnlySpan<char> Slice(this ReadOnlySpan<char> span, TextSpan textSpan) =>
+    public static ReadOnlySpan<T> Slice<T>(this ReadOnlySpan<T> span, TextSpan textSpan) =>
         span[textSpan.Start..textSpan.End];
 
     /// <summary>
