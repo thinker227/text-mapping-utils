@@ -182,13 +182,13 @@ public readonly struct TextSpan : IEquatable<TextSpan>
         obj is TextSpan other && Equals(other);
 
     /// <summary>
-    /// Checks a <see cref="TextSpan"/> is equal to another.
+    /// Checks whether a <see cref="TextSpan"/> is equal to another.
     /// </summary>
     public static bool operator ==(TextSpan a, TextSpan b) =>
         a.Equals(b);
 
     /// <summary>
-    /// Checks a <see cref="TextSpan"/> is not equal to another.
+    /// Checks whether a <see cref="TextSpan"/> is not equal to another.
     /// </summary>
     public static bool operator !=(TextSpan a, TextSpan b) =>
         !a.Equals(b);

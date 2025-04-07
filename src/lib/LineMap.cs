@@ -23,7 +23,7 @@ public sealed class LineMap : IReadOnlyList<Line>
     public int LineCount => lines.Length;
 
     /// <summary>
-    /// The size of the mapped text.
+    /// The size of the mapped text in characters.
     /// </summary>
     public int Size => lines[^1].Span.End;
 
