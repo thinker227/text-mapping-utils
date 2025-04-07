@@ -138,7 +138,7 @@ public readonly struct TextSpan : IEquatable<TextSpan>
                 "Start cannot be less than 0.");
         if (length < 0)
             throw new ArgumentOutOfRangeException(nameof(length),
-                "Length cannot be less than 0");
+                "Length cannot be less than 0.");
 
         return new()
         {

@@ -111,7 +111,7 @@ public sealed class LineMap : IReadOnlyList<Line>
                 "Character position cannot be less than 0.");
         if (position > Size)
             throw new ArgumentOutOfRangeException(nameof(position),
-                $"Character position must be less than or equal to the size of the string the line map was constructed from {Size}.");
+                $"Character position must be less than or equal to the size of the string the line map was constructed from ({Size}).");
 
         var startLine = 0;
         var endLine = LineCount;
