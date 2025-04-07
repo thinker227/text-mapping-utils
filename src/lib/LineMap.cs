@@ -49,22 +49,26 @@ public sealed class LineMap : IReadOnlyList<Line>
 
         var lineNumber = 0;
         var lineStart = 0;
-        var lineEnd = 0;
 
-        for (var i = 0; i < str.Length; i++)
+        while (true)
         {
-            lineEnd++;
+            var newlineIndex = str.IndexOf('\n');
 
-            if (str[i] is not '\n') continue;
+            var isLastLine = newlineIndex == -1;
 
+            var lineLength = !isLastLine
+                ? newlineIndex + 1
+                : str.Length;
+            var lineEnd = lineStart + lineLength;
             lines.Add(new(lineNumber, new() { Start = lineStart, End = lineEnd }));
 
-            lineNumber++;
-            lineStart = i + 1;
-            lineEnd = lineStart;
-        }
+            if (isLastLine) break;
 
-        lines.Add(new(lineNumber, new() { Start = lineStart, End = lineEnd }));
+            lineNumber += 1;
+            lineStart = lineEnd;
+            var nextLineStartIndex = newlineIndex + 1;
+            str = str[nextLineStartIndex..];
+        }
 
         return new(lines.ToImmutable());
     }

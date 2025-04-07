@@ -8,13 +8,59 @@ public class LineMapTests
     private const string Text = "all\nbabel\ncs";
 
     [Fact]
-    public static void Create_ReturnsSingleLine_EmptyString()
+    public void Create_ReturnsSingleLine_EmptyString()
     {
         var map = LineMap.Create("");
 
         map.LineCount.ShouldBe(1);
 
         map.GetLine(0).ShouldBe(new(0, new(0, 0)));
+    }
+
+    [Fact]
+    public void Create_ReturnsSingleLine_SingleLineWithoutNewline()
+    {
+        var map = LineMap.Create("foo");
+
+        map.LineCount.ShouldBe(1);
+
+        map.GetLine(0).ShouldBe(new(0, new(0, 3)));
+    }
+
+    [Fact]
+    public void Create_ReturnsTwoLines_SingleLineWithTrailingNewline()
+    {
+        var map = LineMap.Create("bar\n");
+
+        map.LineCount.ShouldBe(2);
+
+        map.GetLine(0).ShouldBe(new(0, new(0, 4)));
+        map.GetLine(1).ShouldBe(new(1, new(4, 4)));
+    }
+
+    [Fact]
+    public void Create_ReturnsMultipleLines_MultipleLines()
+    {
+        var map = LineMap.Create("foo\nbar\n");
+
+        map.LineCount.ShouldBe(3);
+
+        map.GetLine(0).ShouldBe(new(0, new(0, 4)));
+        map.GetLine(1).ShouldBe(new(1, new(4, 8)));
+        map.GetLine(2).ShouldBe(new(2, new(8, 8)));
+    }
+
+    [Fact]
+    public void Create_ReturnsMultipleEmptyLines_MultipleEmptyLines()
+    {
+        var map = LineMap.Create("\n\n\n");
+
+        map.LineCount.ShouldBe(4);
+
+        map.GetLine(0).ShouldBe(new(0, new(0, 1)));
+        map.GetLine(1).ShouldBe(new(1, new(1, 2)));
+        map.GetLine(2).ShouldBe(new(2, new(2, 3)));
+        map.GetLine(3).ShouldBe(new(3, new(3, 3)));
     }
 
     public static TheoryData<int, Line> GetLine_ReturnsLine_InRange_Data()
